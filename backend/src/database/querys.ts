@@ -1,4 +1,4 @@
-import { db } from '../config/database/config';
+import { db } from "./config";
 
 // getDocuments is a function that returns all the documents from a collection
 export const getDocuments = async (collection: string) => {
@@ -13,7 +13,7 @@ export const getDocument = async (collection: string, documentId: string) => {
   if (doc.exists) {
     return { id: doc.id, ...doc.data() };
   } else {
-    throw new Error('No such document!');
+    throw new Error("No such document!");
   }
 };
 
