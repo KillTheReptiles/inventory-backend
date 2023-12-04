@@ -12,16 +12,20 @@
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "18"
+    "node": "20"
   },
-  "main": "lib/index.js",
+  "main": "build/index.js",
   "dependencies": {
     "@prisma/client": "^5.6.0",
     "firebase-admin": "^11.8.0",
-    "firebase-functions": "^4.3.1"
+    "firebase-functions": "^4.3.1",
+    "joi": "^17.11.0"
   },
   "devDependencies": {
+    "@types/joi": "^17.2.3",
     "firebase-functions-test": "^3.1.0",
+    "firebase-tools": "^12.9.1",
+    "nodemon": "^3.0.2",
     "prisma": "^5.6.0",
     "typescript": "^4.9.0"
   },

@@ -6,27 +6,39 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
 }
 
-model USER {
-  ID          Int      @id
-  EMAIL       String   @unique
-  COMPAMYNAME String
-  LOGOURL     String
-  CREATEDAT   DateTime @default(now())
-  UPDATEDAT   DateTime @updatedAt
+model User {
+  ID           String   @id @unique
+  STATUS       Int      @default(0)
+  EMAIL        String   @unique
+  COMPANY_NAME String
+  LOGO_URL     String?
+  ROLE         String   @default("company")
+  CREATED_AT   DateTime @default(now())
+  UPDATED_AT   DateTime @default(now()) @updatedAt
+
+  // Relation one to many between User (Company) and Product
+  products Product[]
 }
 
-model PRODUCT {
+model Product {
   ID          Int      @id @default(autoincrement())
   NAME        String
-  DESCRIPTION String
+  DESCRIPTION String?
   PRICE       Float
-  IMGURL      String
+  IMG_URL     String?
   CATEGORY    String
   STOCK       Int      @default(0)
-  CREATEDAT   DateTime @default(now())
-  UPDATEDAT   DateTime @updatedAt
+  CREATED_AT  DateTime @default(now())
+  UPDATED_AT  DateTime @updatedAt
+
+  // Relation many to one between Product and User (Company)
+  company    User   @relation(fields: [COMPANY_ID], references: [ID])
+  COMPANY_ID String
+
+  @@index([COMPANY_ID])
 }
