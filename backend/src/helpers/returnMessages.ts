@@ -1,6 +1,6 @@
 // In this file we define the messages that we will return to the client and server in case of error or success
 
-export function responseMessage(message: string, status: number) {
+export function responseMessage(message: any, status: number) {
   return { message: message, status: status };
 }
 

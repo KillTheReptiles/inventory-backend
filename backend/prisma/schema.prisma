@@ -31,8 +31,9 @@ model Product {
   DESCRIPTION String?
   PRICE       Float
   IMG_URL     String?
-  CATEGORY    String
+  CATEGORY_ID String
   STOCK       Int      @default(0)
+  STATUS      Int      @default(0)
   CREATED_AT  DateTime @default(now())
   UPDATED_AT  DateTime @updatedAt
 

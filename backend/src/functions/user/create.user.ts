@@ -7,14 +7,23 @@ import { joiValidation } from "../../helpers/joiValidation";
 
 export const createUser = async (data: User, context: https.CallableContext) => {
   try {
-    data.id = context.auth!.uid || "b"; // Set user id from Firebase Auth
+    data.id = context.auth!.uid; // Set user id from Firebase Auth
     data.status = 1; // Set user status to active by default
+
+    console.log(data.id);
+
+    // Verify if the uid is already in use
+    const uid = await prisma.user.findUnique({ where: { ID: data.id } });
+
+    if (uid) {
+      return responseMessage("Id already in use", 400);
+    }
 
     // Verify if the email is already in use
     const email = await prisma.user.findUnique({ where: { EMAIL: data.email } });
 
     if (email) {
-      responseMessage("Email already in use", 400);
+      return responseMessage("Email already in use", 400);
     }
 
     // Verify the data with the Joi schema
@@ -33,8 +42,9 @@ export const createUser = async (data: User, context: https.CallableContext) => 
     });
     console.log(user);
 
-    return responseMessage(`User created ${user}`, 200);
+    return responseMessage(`User created successfully`, 200);
   } catch (error) {
-    return console.error(error);
+    console.error(error);
+    return responseMessage("Something was wrong", 500);
   }
 };

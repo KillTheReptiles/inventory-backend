@@ -2,9 +2,11 @@
 // example:
 // import { loader as loaderProduct } from '../../functions/product/loader.product';
 
+import { loaderProduct } from "../../functions/product/loader.product";
 import { loaderUser } from "../../functions/user/loader.user";
 
 export function loadAllFunctions(exports: any) {
   // loaderProduct(exports);
   loaderUser(exports);
+  loaderProduct(exports);
 }
